@@ -21,9 +21,9 @@ String request;
 void setup(){
   Ethernet.begin(mac,ip);
   pinMode(ac,OUTPUT);
-  pinMode(5,OUTPUT);
   pinMode(car,OUTPUT);
   pinMode(9,INPUT);
+  pinMode(5,OUTPUT);
 
   
   Serial.begin(9600);
@@ -56,13 +56,18 @@ void loop(){
             digitalWrite(ac,LOW);
             Serial.println("OFF");
             }
-            else if(request.indexOf("car_on")>0 && p==1)
+            if(request.indexOf("car_on")>0 && p==1)
             {
               digitalWrite(car,HIGH);
+              digitalWrite(5,LOW);
             }
             else if(request.indexOf("car_off")>0 || p==0)
             {
               digitalWrite(car,LOW);
+            }
+            if(request.indexOf("car_off")>0 && p==1)
+            {
+              digitalWrite(5,HIGH);
             }
         client.println("HTTP/1.1 200 OK");
         client.println("Content-Type: text/html");
@@ -93,8 +98,8 @@ void loop(){
              
 
            
-            int tem=analogRead(A1);
-            int ldr=analogRead(A0);
+            int tem=analogRead(A0);
+            //int ldr=analogRead(A0);
             client.println("Temperature ");
             
             client.print(" is ");
@@ -102,8 +107,8 @@ void loop(){
             int t=tem*0.041;
             
             client.println("<br />");
-            client.print("luminisity is ");
-            client.print(ldr);
+            //client.print("luminisity is ");
+            //client.print(ldr);
             client.println("<br />");
               if(t>35)
             {
