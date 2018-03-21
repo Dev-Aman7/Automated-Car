@@ -21,6 +21,7 @@ String request;
 void setup(){
   Ethernet.begin(mac,ip);
   pinMode(ac,OUTPUT);
+  pinMode(5,OUTPUT);
   pinMode(car,OUTPUT);
   pinMode(9,INPUT);
 
